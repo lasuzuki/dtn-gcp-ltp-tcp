@@ -15,7 +15,7 @@ This is the third 5th tutorial on a series of DTN on Google Cloud tutorials. In 
 
 In this tutorial we will introduce you to Windows Azure, and how to configure a 3-node network using ION. The figure below shows the network we will be building. Note that this example network uses two different convergence layers: TCP and LTP. This can illustrates the case of a terrestrial connection with two interplanetary internet nodes.
 
-<img src="https://github.com/lasuzuki/dtn-gcp-ltp-tcp/blob/main/blob/network_arch.png" width=600 align=center>
+<img src="https://github.com/lasuzuki/dtn-gcp-ltp-tcp/blob/main/blob/net_arch.png" width=600 align=center>
 
 # Getting Started on Windows Azure
 Sign up for a free account on [Windows Azure](www.azure.microsoft.com). Once your free account is set up, log into the [Azure Portal](https://portal.azure.com/). Under `Azure Services`, click `Virtual Machines`. In the Virtual Machines window, click `Add` and follow the steps below.

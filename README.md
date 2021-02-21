@@ -15,7 +15,26 @@ This is the third 5th tutorial on a series of DTN on Google Cloud tutorials. In 
 
 In this tutorial we will introduce you to Windows Azure, and how to configure a 3-node network using ION. The figure below shows the network we will be building. Note that this example network uses two different convergence layers: TCP and LTP. This can illustrates the case of a terrestrial connection with two interplanetary internet nodes.
 
-<img src="https://github.com/lasuzuki/dtn-gcp/blob/main/blob/img1.png" width=400 align=center>
+<img src="https://github.com/lasuzuki/dtn-gcp-ltp-tcp/blob/main/blob/network_arch.png" width=600 align=center>
+
+# Three-Node Network
+
+In this section, we assume that `host 1` has an IP address of 10.0.0.1, `host 2` has an IP address of `10.0.0.2`, and `host 3` has an IP address of 10.0.0.3. Please modify this for your uses. Please note that in this tutorial we are not covering routing, therefore, `host2` cannot communicate with `host3`. The routing tutorial can be found here.
+
+This network is created by running the following command on `host 1`
+````
+ionstart -I host1.rc
+````
+This command is run on `host 2`:
+````
+ionstart -I host2.rc
+````
+Finally, this command is run on `host 3`
+````
+ionstart -I host3.rc
+````
+
+
 
 
 

@@ -53,16 +53,18 @@ Finally, this command is run on `host 3`
 ionstart -I host3.rc
 ````
 
-# The Host3.rc file
+# The host3.rc configuration file - TCP
 For the configuration files `host 1` and `host 2`, follow the examples given in the tutorial [Running DTN on Google Cloud using a Two-Node Ring](https://github.com/lasuzuki/dtn-gcp-2nodes). Remember to add `contact`, `range`, `span`, `outduct` and a `plan` for `host 3`. Below is the configuration file `host3.rc`.
+
+The `ionadmin` configuration uses tcp from `host 2` to `host 3`
 ````
 ## begin ionadmin 
 # ionrc configuration file for host3 in a 3node tcp/ltp test.
 # This uses tcp from 1 to 3.
 # 
 # Initialization command (command 1). 
-#       Set this node to be node 3 (as in ipn:3).
-#       Use default sdr configuration (empty configuration file name '').
+# Set this node to be node 3 (as in ipn:3).
+# Use default sdr configuration (empty configuration file name '').
 1 3 ''
 # start ion node
 s
@@ -90,7 +92,10 @@ a range +1 +3600 2 3 1
 m production 1000000
 m consumption 1000000
 ## end ionadmin 
+````
 
+The `bpadmin` configuration uses adds the endpoints and the protocol `tcp`. In the protocol section, it estimates transmission capacity assuming 1400 bytes of each frame (in this case, tcp on ethernet) for payload, and 100 bytes for overhead. The induct and outduct will listen on `port 4556`, the IANA assigned default DTN TCP convergence layer port. The induct itself is implemented by the `tcpcli` command and the outduct is implemented by the `tcpclo`
+````
 ## begin bpadmin 
 # bprc configuration file for host3 in a 3node test.
 # Initialization command (command 1).
@@ -106,39 +111,36 @@ a endpoint ipn:3.2 q
 
 # Add a protocol. 
 # Add the protocol named tcp.
-# Estimate transmission capacity assuming 1400 bytes of each frame (in
-# this case, tcp on ethernet) for payload, and 100 bytes for overhead.
 a protocol tcp 1400 100
 
 # Add an induct. (listen)
-# The induct will listen on port 4556, the IANA assigned default DTN
-# TCP convergence layer port.
-# The induct itself is implemented by the 'tcpcli' command.
 a induct tcp 10.0.0.3:4556 tcpcli
 
 # Add an outduct (send to yourself).
 a outduct tcp 10.0.0.3:4556 tcpclo
 
-# Add an outduct. (send to host1)
-#       Add an outduct to send bundles using the tcp protocol.
-#       The outduct will connect to the IP address 10.1.1.1 using the
-#       IANA assigned default DTN TCP port of 4556.
-#       The outduct itself is implemented by the 'tcpclo' command.
+# Add an outduct. (send to host2)
 a outduct tcp external_ip_of_host_2:4556 tcpclo
 
 # Start bundle protocol engine, also running all of the induct, outduct,
 # and administration programs defined above.
 s
 ## end bpadmin 
+````
 
+The `ipnadmin` configuration adds the egress plans (to host 3 itself and to host 2) using `tcp`.
+````
 ## begin ipnadmin 
 # ipnrc configuration file for host1 in the 3node tcp network.
 # Add an egress plan (to yourself).
 a plan 2 tcp/10.0.0.3:4556
-# Add an egress plan. (to the other host)
+# Add an egress plan (to the host 2).
 a plan 2 tcp/external_IP_of_node_2:4556
 ## end ipnadmin
+````
 
+The `ionsecadmin` configuration enables bundle security
+````
 ## begin ionsecadmin
 1
 ## end ionsecadmin
